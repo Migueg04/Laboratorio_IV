@@ -9,7 +9,7 @@ class Card extends HTMLElement {
   }
 
   connectedCallback() {
-    this.idPeleador = this.getAttribute('nombreCompleto') || ''; // Usamos el nombre como ID
+    this.idPeleador = this.getAttribute('nombreCompleto') || '';  
     store.subscribe((state: State) => this.handleChange(state));
     this.render();
   }

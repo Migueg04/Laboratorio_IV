@@ -36,7 +36,7 @@ import {
     }
   
     connectedCallback() {
-      this.canvas.height = 20; // Puedes ajustar este valor según el diseño de tu card
+      this.canvas.height = 20;
   
       const ctx = this.canvas.getContext('2d');
       if (!ctx) return;
