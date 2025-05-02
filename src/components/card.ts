@@ -1,4 +1,4 @@
-import { State, store } from '../flux/store';
+
 
 class Card extends HTMLElement {
   idPeleador: string = '';
@@ -42,6 +42,13 @@ class Card extends HTMLElement {
           width: 100%;
           height: auto;
           border-radius: 8px;
+        }
+
+        #bar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height:40px;
         }
             
       </style>
