@@ -20,7 +20,7 @@ export const StoreActions = {
 }
 
 export const CounterActions = {
-    increment: (value: number) => {
+    increment: (value: string) => {
         AppDispatcher.dispatch({
             type: CounterActionTypes.INCREMENT_COUNT,
             payload: value,

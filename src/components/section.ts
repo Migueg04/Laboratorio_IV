@@ -34,30 +34,31 @@ class Section extends HTMLElement {
         const peleadores = getPeleadores();
 
         for (let i = 0; i < peleadores.length; i += 2) {
+            const pairId = `pair-${i / 2}`;
+
             const p1 = peleadores[i];
             const p2 = peleadores[i + 1];
 
-            // Crear namebar primero
             const namebar = document.createElement('name-bar');
             namebar.setAttribute('nombre1', p1.nombreCompleto);
             namebar.setAttribute('nombre2', p2 ? p2.nombreCompleto : '');
             container?.appendChild(namebar);
 
-            // Agregar primer card
             const card1 = document.createElement('card-component');
             card1.setAttribute('nombreCompleto', p1.nombreCompleto);
             card1.setAttribute('edad', p1.edad.toString());
             card1.setAttribute('serie', p1.serie);
             card1.setAttribute('imagen', p1.imagen);
+            card1.setAttribute('pair-id', pairId);
             container?.appendChild(card1);
 
-            // Agregar segundo card si existe
             if (p2) {
                 const card2 = document.createElement('card-component');
                 card2.setAttribute('nombreCompleto', p2.nombreCompleto);
                 card2.setAttribute('edad', p2.edad.toString());
                 card2.setAttribute('serie', p2.serie);
                 card2.setAttribute('imagen', p2.imagen);
+                card2.setAttribute('pair-id', pairId);
                 container?.appendChild(card2);
             }
         }
