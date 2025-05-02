@@ -3,6 +3,7 @@ import { AppDispatcher, Action } from './dispatcher';
 
 export type State = {
     counts: { [id: string]: number }; // Un contador por cada peleador
+    pairs: { [id: string]: number }; // Un contador por pareja
 };
 
 type Listener = (state: State) => void;
@@ -10,6 +11,7 @@ type Listener = (state: State) => void;
 class Store {
     private _myState: State = {
         counts: {}, // Aquí se guardan los contadores individuales
+        pairs: {}
     };
 
     private _listeners: Listener[] = [];
@@ -28,12 +30,27 @@ class Store {
                 if (typeof action.payload === 'string') {
                     const id = action.payload;
                     const current = this._myState.counts[id] || 0;
+                    let pairGroupzzz;
+                    if (parseInt(id) % 2 === 0) { // Par
+                        parseInt(id) / 2
+                    } else { // Impar
+                        Math.ceil(parseInt(id) / 2)
+                    }
                     this._myState = {
                         ...this._myState,
                         counts: {
                             ...this._myState.counts,
                             [id]: current + 1,
                         },
+                        pairs: {
+                            /* 
+                            Pareja-1: 1 y 2,
+                            Pareja-2: 3 y 4,
+                            Pareja-3: 5 y 6,
+                            
+                            */
+                            ...this._myState.pairs,
+                        }
                     };
                     this._emitChange();
                 }

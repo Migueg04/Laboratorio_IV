@@ -34,7 +34,7 @@ class Section extends HTMLElement {
         const peleadores = getPeleadores();
 
         for (let i = 0; i < peleadores.length; i += 2) {
-            const pairId = `pair-${i / 2}`;
+            const pairId = `pair-${i / 2 + 1}`;
 
             const p1 = peleadores[i];
             const p2 = peleadores[i + 1];
@@ -45,6 +45,7 @@ class Section extends HTMLElement {
             container?.appendChild(namebar);
 
             const card1 = document.createElement('card-component');
+            card1.setAttribute('id', p1.id.toString());
             card1.setAttribute('nombreCompleto', p1.nombreCompleto);
             card1.setAttribute('edad', p1.edad.toString());
             card1.setAttribute('serie', p1.serie);
@@ -54,6 +55,7 @@ class Section extends HTMLElement {
 
             if (p2) {
                 const card2 = document.createElement('card-component');
+                card2.setAttribute('id', p2.id.toString());
                 card2.setAttribute('nombreCompleto', p2.nombreCompleto);
                 card2.setAttribute('edad', p2.edad.toString());
                 card2.setAttribute('serie', p2.serie);

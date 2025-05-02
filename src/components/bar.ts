@@ -8,6 +8,7 @@ import {
     Tooltip,
     Legend
   } from 'chart.js';
+import { State, store } from '../flux/store';
   
   // Registrar los elementos necesarios para que Chart.js funcione
   ChartJS.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -15,28 +16,30 @@ import {
   class BarChart extends HTMLElement {
     private canvas = document.createElement('canvas');
     private chart: ChartJS | null = null;
-    private value: number = 0;
+    private votos: number = 0;
+    private idPeleador: number = 0;
   
     // Hacer que el componente observe el atributo "value"
     static get observedAttributes() {
-      return ['value'];
+      return ['peleador-id'];
     }
   
     constructor() {
       super();
       this.attachShadow({ mode: 'open' })!.appendChild(this.canvas);
+      store.subscribe((state: State) => this.updateChart(state));
     }
   
-    // Escuchar cambios en el atributo "value"
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-      if (name === 'value') {
-        this.value = parseFloat(newValue) || 0;
+      if (name === 'peleador-id') {
+        this.idPeleador = parseFloat(newValue) || 0;
         this.updateChart();
       }
     }
   
     connectedCallback() {
       this.canvas.height = 20;
+      this.votos = store.getState().counts[this.idPeleador]
   
       const ctx = this.canvas.getContext('2d');
       if (!ctx) return;
@@ -48,7 +51,7 @@ import {
           datasets: [
             {
               label: 'Valor único',
-              data: [this.value],
+              data: [this.votos],
               backgroundColor: '#ffff4f',
             },
           ],
@@ -81,9 +84,12 @@ import {
       });
     }
   
-    private updateChart() {
-      if (this.chart) {
-        this.chart.data.datasets[0].data = [this.value];
+    private updateChart(state = store.getState()) {
+      const votosEnFlux = state.counts[this.idPeleador];
+      if (this.chart && this.votos !== votosEnFlux) {
+        this.votos = votosEnFlux;
+        console.log('Me estoy actualizando');
+        this.chart.data.datasets[0].data = [this.votos];
         this.chart.update();
       }
     }

@@ -9,21 +9,21 @@ class Card extends HTMLElement {
   }
 
   connectedCallback() {
-    this.idPeleador = this.getAttribute('nombreCompleto') || '';  
-    store.subscribe((state: State) => this.handleChange(state));
+    this.idPeleador = this.getAttribute('id') || '';  
+    // store.subscribe((state: State) => this.handleChange(state));
     this.render();
   }
 
-  handleChange(state: State) {
-    this.render(state);
+  handleChange() {
+    this.render();
   }
 
-  render(state = store.getState()) {
+  render() {
     const edad = this.getAttribute('edad') || '';
     const serie = this.getAttribute('serie') || '';
     const imagen = this.getAttribute('imagen') || '';
 
-    const votos = state.counts[this.idPeleador] || 0;
+    // const votos = state.counts[this.idPeleador] || 0;
 
     this.shadowRoot!.innerHTML = `
       <style>
@@ -50,10 +50,8 @@ class Card extends HTMLElement {
         <img src="${imagen}">
         <p>Serie: <strong>${serie}</strong></p>
         <p>Edad: ${edad}</p>
-        <p>Votos: ${votos}</p>
         <div id="bar">
-            <bar-chart value="${votos}"></bar-chart>
-
+            <bar-chart peleador-id="${this.idPeleador}"></bar-chart>
         </div>
         <button-component peleador-id="${this.idPeleador}"></button-component>
       </div>
